@@ -1,19 +1,19 @@
-import { createContext, useState } from "react";
+import { createContext, useState } from 'react';
 
 const FavoritesContext = createContext({
   favorites: [],
   totalFavorites: 0,
-  addFavorite: (favoritesMeetup) => { },
+  addFavorite: (favoriteMeetup) => { },
   removeFavorite: (meetupId) => { },
-  itemIsFavorite: (meetupId) => { },
+  itemIsFavorite: (meetupId) => { }
 });
 
 export function FavoritesContextProvider(props) {
   const [userFavorites, setUserFavorites] = useState([]);
 
-  function addFavoriteHandler(favoritesMeetup) {
+  function addFavoriteHandler(favoriteMeetup) {
     setUserFavorites((prevUserFavorites) => {
-      return prevUserFavorites.concat(favoritesMeetup);
+      return prevUserFavorites.concat(favoriteMeetup);
     });
   }
 
@@ -23,23 +23,22 @@ export function FavoritesContextProvider(props) {
     });
   }
 
-  function ItemIsFavoriteHandler(meetupId) {
-    return userFavorites.some(meetup => meetup.id === meetup.Id);
+  function itemIsFavoriteHandler(meetupId) {
+    return userFavorites.some(meetup => meetup.id === meetupId);
   }
 
   const context = {
     favorites: userFavorites,
-    total: userFavorites.length,
+    totalFavorites: userFavorites.length,
     addFavorite: addFavoriteHandler,
-    removeFavorites: removeFavoriteHandler,
-    itemIsFavorite: ItemIsFavoriteHandler,
+    removeFavorite: removeFavoriteHandler,
+    itemIsFavorite: itemIsFavoriteHandler
   };
 
   return (
     <FavoritesContext.Provider value={context}>
       {props.children}
     </FavoritesContext.Provider>
-
   );
 }
 
